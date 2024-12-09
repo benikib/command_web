@@ -11,8 +11,12 @@ class Surveillant extends Model
     protected $fillable = [
         'user_id' ,
         'examen_id' ,
-        
+
     ];
+    public function examen()
+    {
+        return $this->belongsTo(Examen::class, 'examen_id');
+    }
     public function user()
     {
         return $this->belongsTo(User::class);

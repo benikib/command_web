@@ -1,282 +1,171 @@
 @extends('layouts.default')
+
 @section('content')
-<link rel="stylesheet" href="../assets/vendor/apexcharts/dist/apexcharts.css">
-<style type="text/css">
-  .apexcharts-tooltip.apexcharts-theme-light {
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
-</style>
-
-    <div class="p-4 sm:p-6 space-y-4 sm:space-y-6">
-      <!-- Grid -->
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <!-- Card -->
-        <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-          <div class="p-4 md:p-5">
-            <div class="flex items-center gap-x-2">
-              <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-neutral-500">
-                Administrateurs
-              </p>
-              <div class="hs-tooltip">
-                <div class="hs-tooltip-toggle">
-                  <svg class="shrink-0 size-4 text-gray-500 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                    <path d="M12 17h.01" />
-                  </svg>
-                  <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-neutral-700" role="tooltip">
-
-                  </span>
+<div class="p-4 sm:p-6 space-y-6">
+    <!-- Statistiques -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Utilisateurs -->
+        <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-[1.02]">
+            <div class="flex items-center justify-between mb-4">
+                <div class="bg-blue-500/10 p-3 rounded-lg">
+                    <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
                 </div>
-              </div>
             </div>
-
-            <div class="mt-1 flex items-center gap-x-2">
-              <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-            {{ $admins }}
-              </h3>
-              <span class="flex items-center gap-x-1 text-green-600">
-                <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-                  <polyline points="16 7 22 7 22 13" />
-                </svg>
-                <span class="inline-block text-sm">
-                  {{ intval($admins * 100/$users) }}%
-                </span>
-              </span>
-            </div>
-          </div>
+            <h3 class="text-lg font-semibold text-neutral-900 mb-2">Utilisateurs</h3>
+            <p class="text-3xl font-bold text-blue-500">{{ $users }}</p>
+            <p class="text-sm text-neutral-500 mt-2">Total des utilisateurs</p>
         </div>
-        <!-- End Card -->
 
-        <!-- Card -->
-        <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-          <div class="p-4 md:p-5">
-            <div class="flex items-center gap-x-2">
-              <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-neutral-500">
-                Utilisateurs
-              </p>
+        <!-- Administrateurs -->
+        <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-[1.02]">
+            <div class="flex items-center justify-between mb-4">
+                <div class="bg-red-500/10 p-3 rounded-lg">
+                    <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                </div>
             </div>
-
-            <div class="mt-1 flex items-center gap-x-2">
-              <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-                {{ $users }}
-              </h3>
-            </div>
-          </div>
+            <h3 class="text-lg font-semibold text-neutral-900 mb-2">Administrateurs</h3>
+            <p class="text-3xl font-bold text-red-500">{{ $admins }}</p>
+            <p class="text-sm text-neutral-500 mt-2">Total des administrateurs</p>
         </div>
-        <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-            <div class="p-4 md:p-5">
-              <div class="flex items-center gap-x-2">
-                <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-neutral-500">
-                  Sessions
-                </p>
-              </div>
 
-              <div class="mt-1 flex items-center gap-x-2">
-                <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-                  {{ $sessions }}
-                </h3>
-              </div>
+        <!-- Sessions -->
+        <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-[1.02]">
+            <div class="flex items-center justify-between mb-4">
+                <div class="bg-green-500/10 p-3 rounded-lg">
+                    <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </div>
             </div>
-          </div>
-        <!-- End Card -->
-        <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-            <div class="p-4 md:p-5">
-              <div class="flex items-center gap-x-2">
-                <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-neutral-500">
-                  Examens
-                </p>
-              </div>
+            <h3 class="text-lg font-semibold text-neutral-900 mb-2">Sessions</h3>
+            <p class="text-3xl font-bold text-green-500">{{ $sessions_en_cours }}</p>
+            <p class="text-sm text-neutral-500 mt-2">Sessions en cours</p>
+        </div>
 
-              <div class="mt-1 flex items-center gap-x-2">
-                <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-                  {{ $examens }}
-                </h3>
-              </div>
+        <!-- Examens -->
+        <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-[1.02]">
+            <div class="flex items-center justify-between mb-4">
+                <div class="bg-purple-500/10 p-3 rounded-lg">
+                    <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                </div>
             </div>
-          </div>
-        <!-- Card -->
-
-        <!-- End Card -->
-
-        <!-- Card -->
-
-        <!-- End Card -->
-      </div>
-      <!-- End Grid -->
-
-
-
-      <!-- Card -->
-      <!-- Card -->
-    <div class="p-4 md:p-5 min-h-[410px] flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-    <!-- Header -->
-    <div class="flex justify-between items-center">
-      <div>
-        <h2 class="text-sm text-gray-500 dark:text-neutral-500">
-          Sessions
-        </h2>
-        <p class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-          {{ $sessions }}
-        </p>
-      </div>
-
-      <div>
-        <span class="py-[5px] px-1.5 inline-flex items-center gap-x-1 text-xs font-medium rounded-md bg-teal-100 text-teal-800 dark:bg-teal-500/10 dark:text-teal-500">
-          <svg class="inline-block size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
-          2%
-        </span>
-      </div>
+            <h3 class="text-lg font-semibold text-neutral-900 mb-2">Examens</h3>
+            <p class="text-3xl font-bold text-purple-500">{{ $examens_semaine->count() }}</p>
+            <p class="text-sm text-neutral-500 mt-2">Cette semaine</p>
+        </div>
     </div>
-    <!-- End Header -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <canvas id="myChart" width="400" height="200"></canvas>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <canvas id="myChart" width="400" height="200"></canvas>
-    <script>
-      window.addEventListener("load", () => {
-        // Récupérer les données PHP
-        let dataFromPHP = <?php echo json_encode($t_sessions); ?>;
 
-        // Préparer les données pour Chart.js
-        let labels = dataFromPHP.map(item => `${item.month}/${item.year}`);
-        let data = dataFromPHP.map(item => item.total_sessions);
-
-        // Créer le graphique avec Chart.js
-        const ctx = document.getElementById('myChart').getContext('2d');
-        new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: labels,
-            datasets: [{
-              label: 'Total Sessions',
-              data: data,
-              borderColor: 'rgba(54, 162, 235, 1)',
-              backgroundColor: 'rgba(54, 162, 235, 0.2)',
-              borderWidth: 3,
-              fill: true,
-              tension: 0.4,
-              pointBackgroundColor: 'rgba(255, 99, 132, 1)',
-              pointRadius: 5,
-              pointHoverRadius: 8,
-              pointHoverBackgroundColor: 'rgba(255, 99, 132, 1)',
-              pointHoverBorderColor: 'rgba(54, 162, 235, 1)',
-              pointHoverBorderWidth: 3
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: 'top',
-                labels: {
-                  font: {
-                    size: 16,
-                    family: 'Arial, sans-serif'
-                  },
-                  color: '#333',
-                },
-              },
-              tooltip: {
-                backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                titleColor: '#fff',
-                bodyColor: '#fff',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1,
-                callbacks: {
-                  label: function(tooltipItem) {
-                    return `Sessions: ${tooltipItem.raw}`;
-                  }
-                }
-              }
-            },
-            scales: {
-              x: {
-                beginAtZero: true,
-                title: {
-                  display: true,
-                  text: 'Month/Year',
-                  color: '#333',
-                  font: {
-                    size: 14,
-                    family: 'Arial, sans-serif',
-                  }
-                },
-                ticks: {
-                  color: '#666',
-                },
-                grid: {
-                  display: false // Désactive les lignes verticales
-                }
-              },
-              y: {
-                beginAtZero: true,
-                title: {
-                  display: true,
-                  text: 'Total Sessions',
-                  color: '#333',
-                  font: {
-                    size: 14,
-                    family: 'Arial, sans-serif',
-                  }
-                },
-                ticks: {
-                  color: '#666',
-                },
-                grid: {
-                  drawOnChartArea: true, // Active les lignes horizontales
-                  color: 'rgba(200, 200, 200, 0.5)', // Couleur des lignes horizontales
-                  borderDash: [5, 5], // Style en pointillé
-                  lineWidth: 1, // Épaisseur des lignes
-                }
-              }
-            },
-            elements: {
-              line: {
-                borderWidth: 3,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                fill: true,
-              },
-            },
-            animation: {
-              duration: 2000,
-              easing: 'easeInOutCubic',
-            },
-            hover: {
-              mode: 'nearest',
-              intersect: true
-            },
-            layout: {
-              padding: {
-                left: 10,
-                right: 10,
-                top: 10,
-                bottom: 10,
-              }
-            }
-          }
-        });
-      });
-    </script>
-
-    <div id="hs-multiple-bar-charts"></div>
-  </div>
-  <!-- End Card -->
-
-      <!-- End Card -->
+    <!-- Examens de la semaine -->
+    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h2 class="text-lg font-semibold text-neutral-900">Examens de la semaine</h2>
+        </div>
+        <div class="p-6">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Heure</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cours</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Professeur</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Local</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        @forelse($examens_semaine as $examen)
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-4 py-3 text-sm text-gray-900">
+                                {{ \Carbon\Carbon::parse($examen->date)->format('d/m/Y') }}
+                            </td>
+                            <td class="px-4 py-3 text-sm text-gray-900">{{ $examen->heure }}</td>
+                            <td class="px-4 py-3 text-sm text-gray-900">{{ $examen->intitule }}</td>
+                            <td class="px-4 py-3 text-sm text-gray-900">{{ $examen->professeur }}</td>
+                            <td class="px-4 py-3 text-sm text-gray-900">{{ $examen->n_local }}</td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('surveillants', ['id' => $examen->id]) }}"
+                                       class="inline-flex items-center p-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                                       title="Gérer les surveillants">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                                        </svg>
+                                    </a>
+                                    <a href="{{ route('examens.download.pdf', ['id' => $examen->id]) }}"
+                                       class="inline-flex items-center p-1.5 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                                       title="Télécharger PDF">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="px-4 py-6 text-sm text-center text-gray-500">
+                                Aucun examen prévu cette semaine
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-  </div>
 
-
-
-
-
-
+    <!-- Derniers PVs soumis -->
+    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h2 class="text-lg font-semibold text-neutral-900">Derniers PVs soumis</h2>
+        </div>
+        <div class="p-6">
+            <div class="space-y-4">
+                @forelse($derniers_pvs as $pv)
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-blue-500/10 p-2 rounded-lg">
+                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-neutral-900 font-medium">{{ $pv->examen_nom }}</h4>
+                            <p class="text-sm text-neutral-500">Soumis par {{ $pv->user_name }}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm text-neutral-500">{{ \Carbon\Carbon::parse($pv->created_at)->diffForHumans() }}</span>
+                        <!-- Bouton de téléchargement PDF -->
+                        <a href="{{ route('pv.download', ['id' => $pv->id]) }}"
+                           class="inline-flex items-center p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                           title="Télécharger le PV">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                @empty
+                <p class="text-center text-neutral-500">Aucun PV soumis récemment</p>
+                @endforelse
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-
 @endsection

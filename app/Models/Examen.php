@@ -16,8 +16,18 @@ class Examen extends Model
         'heure',
         'session_examens_id',
     ];
-    public function session_examens_id()
+    public function sessionExamen()
     {
-        return $this->belongsTo(SessionExamen::class);
+        return $this->belongsTo(SessionExamen::class, 'session_examens_id');
+    }
+
+    public function surveillants()
+    {
+        return $this->hasMany(Surveillant::class);
+    }
+
+    public function pvs()
+    {
+        return $this->hasMany(Pv::class, 'examen_id');
     }
 }

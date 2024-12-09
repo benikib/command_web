@@ -9,89 +9,93 @@
     <link rel="stylesheet" href="https://preline.co/assets/css/main.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-50 dark:bg-neutral-900 flex items-center justify-center min-h-screen">
+<body class="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-neutral-900 dark:to-neutral-800 flex items-center justify-center min-h-screen">
 
-    <!-- Page Content -->
-    <main class=" justify-center items-center min-h-screen">
-        <div class="w-full max-w-2xl">
-            <div class="p-5 sm:p-6 space-y-4 sm:space-y-6">
-                <div class="bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-900 dark:border-neutral-700">
-                    <div class="p-14 sm:p-7">
-                        <div class="text-center">
-                            <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Creer un compte</h1>
-                            <p class="mt-2 text-sm text-gray-600 dark:text-neutral-900">
-                                Deja un compte ?
-                                <a class="text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-blue-500" href="{{ route('login') }}">
-                                    connexion
-                                </a>
-                            </p>
+    <main class="w-full max-w-2xl p-4">
+        <div class="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg dark:bg-neutral-800/80 dark:border-neutral-700">
+            <div class="p-8">
+                <!-- Logo ou Image (optionnel) -->
+                <div class="mb-8 text-center">
+                    <img src="{{ asset('path/to/your/logo.png') }}" alt="Logo" class="h-12 mx-auto mb-4">
+                    <h1 class="text-3xl font-bold text-gray-800 dark:text-white">Créer un compte</h1>
+                    <p class="mt-3 text-gray-600 dark:text-gray-300">
+                        Déjà un compte ?
+                        <a class="text-blue-600 hover:text-blue-700 font-semibold transition-colors dark:text-blue-400" href="{{ route('login') }}">
+                            Connexion
+                        </a>
+                    </p>
+                </div>
+
+                <form method="POST" action="{{ route('register') }}" class="space-y-6">
+                    @csrf
+                    <!-- Les champs de formulaire -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Name -->
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nom</label>
+                            <input type="text" id="name" name="name"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors dark:bg-neutral-700 dark:border-neutral-600 dark:text-white dark:focus:ring-blue-400"
+                                required>
                         </div>
-                        <div class="mt-5">
-                            <div class="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-800 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-neutral-500 dark:before:border-neutral-600 dark:after:border-neutral-600">Or</div>
-                            <!-- Form -->
-                            <form method="POST" action="{{ route('register') }}">
-                                @csrf
-                                <div class="grid gap-y-4">
-                                    <!-- Name -->
-                                    <div>
-                                      <label for="name" class="block text-sm mb-2 dark:text-white">Name</label>
-                                      <input type="text" id="name" name="name" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" required>
-                                    </div>
-                                    <!-- End Name -->
 
-                                    <!-- Email Address -->
-                                    <div>
-                                      <label for="email" class="block text-sm mb-2 dark:text-white">Email address</label>
-                                      <input type="email" id="email" name="email" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" required>
-                                    </div>
-                                    <!-- End Email Address -->
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                            <input type="email" id="email" name="email"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors dark:bg-neutral-700 dark:border-neutral-600 dark:text-white dark:focus:ring-blue-400"
+                                required>
+                        </div>
 
-                                    <!-- Grade -->
-                                    <div>
-                                      <label for="grade" class="block text-sm mb-2 dark:text-white">Grade</label>
-                                      <input type="text" id="grade" name="grade" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" required>
-                                    </div>
-                                    <!-- End Grade -->
+                        <!-- Grade -->
+                        <div>
+                            <label for="grade" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Grade</label>
+                            <input type="text" id="grade" name="grade"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors dark:bg-neutral-700 dark:border-neutral-600 dark:text-white dark:focus:ring-blue-400"
+                                required>
+                        </div>
 
-                                    <!-- Filière -->
-                                    <div>
-                                      <label for="filiere" class="block text-sm mb-2 dark:text-white">Filière</label>
-                                      <input type="text" id="filiere" name="filiere" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" required>
-                                    </div>
-                                    <!-- End Filière -->
+                        <!-- Filière -->
+                        <div>
+                            <label for="filiere" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filière</label>
+                            <input type="text" id="filiere" name="filiere"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors dark:bg-neutral-700 dark:border-neutral-600 dark:text-white dark:focus:ring-blue-400"
+                                required>
+                        </div>
 
-                                    <!-- Password -->
-                                    <div>
-                                      <label for="password" class="block text-sm mb-2 dark:text-white">Password</label>
-                                      <input type="password" id="password" name="password" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" required>
-                                    </div>
-                                    <!-- End Password -->
+                        <!-- Password -->
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Mot de passe</label>
+                            <input type="password" id="password" name="password"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors dark:bg-neutral-700 dark:border-neutral-600 dark:text-white dark:focus:ring-blue-400"
+                                required>
+                        </div>
 
-                                    <!-- Confirm Password -->
-                                    <div>
-                                      <label for="password_confirmation" class="block text-sm mb-2 dark:text-white">Confirm Password</label>
-                                      <input type="password" id="password_confirmation" name="password_confirmation" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" required>
-                                    </div>
-                                    <!-- End Confirm Password -->
-
-                                    <!-- Checkbox -->
-                                    <div class="flex items-center">
-                                      <input id="remember-me" name="remember-me" type="checkbox" class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
-                                      <label for="remember-me" class="text-sm dark:text-white ms-3">I accept the <a class="text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-blue-500" href="#">Terms and Conditions</a></label>
-                                    </div>
-                                    <!-- End Checkbox -->
-
-                                    <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Sign up</button>
-                                  </div>
-                                </form>
-                            <!-- End Form -->
+                        <!-- Confirm Password -->
+                        <div>
+                            <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Confirmer le mot de passe</label>
+                            <input type="password" id="password_confirmation" name="password_confirmation"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors dark:bg-neutral-700 dark:border-neutral-600 dark:text-white dark:focus:ring-blue-400"
+                                required>
                         </div>
                     </div>
-                </div>
+
+                    <!-- Terms -->
+                    <div class="flex items-center space-x-2">
+                        <input type="checkbox" id="remember-me" name="remember-me"
+                            class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-neutral-600 dark:bg-neutral-700">
+                        <label for="remember-me" class="text-sm text-gray-600 dark:text-gray-300">
+                            J'accepte les <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">conditions d'utilisation</a>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit"
+                        class="w-full py-3 px-4 text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-neutral-800">
+                        S'inscrire
+                    </button>
+                </form>
             </div>
         </div>
     </main>
-
-
 </body>
 </html>

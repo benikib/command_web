@@ -1,163 +1,87 @@
 @extends('layouts.personnel')
 @section('content')
-
-<link rel="stylesheet" href="../assets/vendor/apexcharts/dist/apexcharts.css">
-<style type="text/css">
-  .apexcharts-tooltip.apexcharts-theme-light {
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
-</style>
-
-    <div class="p-4 sm:p-6 space-y-4 sm:space-y-6">
-      <!-- Grid -->
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <!-- Card -->
-        <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-          <div class="p-4 md:p-5">
-            <div class="flex items-center gap-x-2">
-              <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-neutral-500">
-                Total de surveillances
-              </p>
-              <div class="hs-tooltip">
-                <div class="hs-tooltip-toggle">
-                  <svg class="shrink-0 size-4 text-gray-500 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                    <path d="M12 17h.01" />
-                  </svg>
-
+<div class="p-4 sm:p-6 space-y-6">
+    <!-- En-tête avec statistiques -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Total surveillances -->
+        <div class="bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] border border-gray-700">
+            <div class="flex items-center gap-4 mb-3">
+                <div class="bg-blue-500/10 p-3 rounded-lg">
+                    <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
                 </div>
-              </div>
+                <div>
+                    <p class="text-sm text-gray-400">Total surveillances</p>
+                    <h3 class="text-2xl font-bold text-white">{{ $totalsurveillance }}</h3>
+                </div>
             </div>
-
-            <div class="mt-1 flex items-center gap-x-2">
-              <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-            {{ $totalsurveillance }}
-              </h3>
-              <span class="flex items-center gap-x-1 text-green-600">
-                <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-                  <polyline points="16 7 22 7 22 13" />
-                </svg>
-                <span class="inline-block text-sm">
-                  1.7%
-                </span>
-              </span>
-            </div>
-          </div>
         </div>
-        <!-- End Card -->
 
-        <!-- Card -->
-        <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-          <div class="p-4 md:p-5">
-            <div class="flex items-center gap-x-2">
-              <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-neutral-500">
-                 total Examen à surveile
-              </p>
+        <!-- Examens à venir -->
+        <div class="bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] border border-gray-700">
+            <div class="flex items-center gap-4 mb-3">
+                <div class="bg-yellow-500/10 p-3 rounded-lg">
+                    <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-400">Examens à surveiller</p>
+                    <h3 class="text-2xl font-bold text-white">{{ $examens_restants }}</h3>
+                </div>
             </div>
-
-            <div class="mt-1 flex items-center gap-x-2">
-              <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-                {{ $examens_restants }}
-              </h3>
-            </div>
-          </div>
         </div>
-        <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-
-          </div>
-        <!-- End Card -->
-
-        <!-- Card -->
-
-        <!-- End Card -->
-
-        <!-- Card -->
-
-        <!-- End Card -->
-      </div>
-      <!-- End Grid -->
-
-
-
-      <!-- Card -->
-      <!-- Card -->
-      <div class="p-4 md:p-5 min-h-[410px] flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-        <!-- Header -->
-        <div class="flex justify-between items-center">
-
-          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-          <canvas id="myChart" width="800" height="400"></canvas>
-
-          <script>
-            window.addEventListener("load", () => {
-                // Récupérer les données PHP
-                let dataFromPHP = <?php echo json_encode($totalsurveillances); ?>;
-
-                // Préparer les données pour Chart.js
-                let labels = dataFromPHP.map(item => `Session ${item.session_id}`);
-                let data = dataFromPHP.map(item => item.total);
-
-                // Créer le graphique avec Chart.js
-                const ctx = document.getElementById('myChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar', // Type du graphique
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Nombre de  participation',
-                            data: data,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(tooltipItem) {
-                                        return `Nombre de fois: ${tooltipItem.raw}`;
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Session ID' // L'étiquette de l'axe des X
-                                },
-                                ticks: {
-                                    autoSkip: false // Pour éviter les étiquettes coupées
-                                }
-                            },
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Nombre de  participation' // L'étiquette de l'axe des Y
-                                },
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            });
-          </script>
-        </div>
-        <!-- End Header -->
     </div>
 
-
-
-
-
-
+    <!-- Liste des examens à surveiller -->
+    <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-700">
+        <div class="p-6 border-b border-gray-700">
+            <h2 class="text-lg font-semibold text-white">Prochains examens à surveiller</h2>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-900/50">
+                    <tr>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Date</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Heure</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Cours</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Local</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-700">
+                    @forelse ($examens as $examen)
+                    <tr class="hover:bg-gray-700/50 transition-colors">
+                        <td class="px-6 py-4 text-sm text-gray-300">{{ \Carbon\Carbon::parse($examen->date)->format('d/m/Y') }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-300">{{ $examen->heure }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-300">{{ $examen->intitule }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-300">{{ $examen->n_local }}</td>
+                        <td class="px-6 py-4">
+                            <a href="{{ route('pv.soumis', ['ex'=> $examen->id, 'id'=>Auth::user()->id]) }}"
+                               class="inline-flex items-center px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors text-sm">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                                Voir détails
+                            </a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="5" class="px-6 py-8 text-center text-gray-400">
+                            Aucun examen à surveiller pour le moment
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 @endsection

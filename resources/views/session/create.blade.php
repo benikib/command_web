@@ -1,105 +1,146 @@
 @extends('layouts.modal')
 @section('title')
-<h3 id="hs-focus-management-modal-label" class="font-bold text-gray-800 dark:text-white">
-  Ajouter une Session
-  </h3>
+<div class="flex items-center gap-x-3">
+    <div class="p-2 bg-yellow-400/10 rounded-lg">
+        <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+    </div>
+    <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">
+        Ajouter une Session
+    </h3>
+</div>
 @endsection
-@section('form')
-<form action={{ route("session_store") }} method="POST">
-    @csrf
-<div class="p-4 overflow-y-auto">
-  <label for="input-label" class="block text-sm font-medium mb-2 dark:text-white">Intitule</label>
-  <input type="text" name="intitule" id="input-label" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:placeholder-neutral-500 dark:text-neutral-400" placeholder="Intitule de la session" autofocus="">
-</div>
-<div class="p-4 overflow-y-auto">
-    <label for="promotion" class="block text-sm font-medium mb-2 dark:text-white">Promotion</label>
-    <div class="relative">
-        <select id="promotion" name="promotion" class="appearance-none py-3 px-4 block w-full border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 shadow-sm">
-            <option value="" selected="">Sélectionnez Promotion</option>
-            <option value="L1">L1</option>
-            <option value="L2">L2</option>
-            <option value="L3">L3</option>
-            <option value="M1">M1</option>
-            <option value="M2">M2</option>
-        </select>
-        <!-- Icone pour le champ -->
-        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-            <svg class="w-5 h-5 text-gray-400 dark:text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-        </div>
-    </div>
-</div>
-  <div class="p-4 overflow-y-auto">
-    <label for="input-label" class="block text-sm font-medium mb-2 dark:text-white">Mention</label>
-    <input type="text" name="mention" id="input-label" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:placeholder-neutral-500 dark:text-neutral-400" placeholder="Mention" autofocus="">
-  </div>
 
- <div class="p-4 overflow-y-auto">
-    <label for="semestre" class="block text-sm font-medium mb-2 dark:text-white">Semestre</label>
-    <div class="relative">
-        <select id="semestre" name="semestre" class="appearance-none py-3 px-4 block w-full border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 shadow-sm">
-            <option value="" selected="">Sélectionnez Semestre</option>
-        </select>
-        <!-- Icone pour le champ -->
-        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-            <svg class="w-5 h-5 text-gray-400 dark:text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
+@section('form')
+<form action="{{ route('repporting.store') }}" method="POST" class="p-4">
+    @csrf
+    <div class="space-y-4">
+        <!-- Mention -->
+        <div>
+            <label for="mention" class="block text-sm font-medium text-neutral-900 dark:text-white mb-1.5">
+                Mention
+            </label>
+            <input type="text"
+                   name="mention"
+                   id="mention"
+                   class="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-neutral-700 focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white text-sm"
+                   placeholder="Ex: Informatique">
+        </div>
+
+        <!-- Promotion -->
+        <div>
+            <label for="promotion" class="block text-sm font-medium text-neutral-900 dark:text-white mb-1.5">
+                Promotion
+            </label>
+            <div class="relative">
+                <select id="promotion"
+                        name="promotion"
+                        class="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-neutral-700 focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white appearance-none text-sm"
+                        onchange="updateSemesters()">
+                    <option value="" selected disabled>Sélectionnez une promotion</option>
+                    <option value="L1">L1</option>
+                    <option value="L2">L2</option>
+                    <option value="L3">L3</option>
+                    <option value="M1">M1</option>
+                    <option value="M2">M2</option>
+                </select>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-400 dark:text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Intitulé de la session -->
+        <div>
+            <label for="intitule" class="block text-sm font-medium text-neutral-900 dark:text-white mb-1.5">
+                Intitulé de la session
+            </label>
+            <select name="intitule"
+                    id="intitule"
+                    class="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-neutral-700 focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white text-sm">
+                <option value="" selected disabled>Sélectionnez un intitulé</option>
+                <option value="Session Ordinaire">Session Ordinaire</option>
+                <option value="Session Spéciale">Session Spéciale</option>
+                <option value="Session de Rattrapage">Session de Rattrapage</option>
+            </select>
+        </div>
+
+        <!-- Semestre -->
+        <div>
+            <label for="semestre" class="block text-sm font-medium text-neutral-900 dark:text-white mb-1.5">
+                Semestre
+            </label>
+            <select name="semestre"
+                    id="semestre"
+                    class="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-neutral-700 focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white text-sm">
+                <option value="" selected disabled>Sélectionnez un semestre</option>
+            </select>
+        </div>
+
+        <!-- Année académique -->
+        <div>
+            <label for="an_academique" class="block text-sm font-medium text-neutral-900 dark:text-white mb-1.5">
+                Année académique
+            </label>
+            <select name="an_academique"
+                    id="an_academique"
+                    class="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-neutral-700 focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white text-sm">
+                @for ($year = now()->year; $year <= now()->year + 10; $year++)
+                    <option value="{{ $year }}-{{ $year + 1 }}">{{ $year }}-{{ $year + 1 }}</option>
+                @endfor
+            </select>
         </div>
     </div>
-</div>
+
+    <!-- Boutons d'action -->
+    <div class="mt-6 flex justify-end gap-x-3">
+        <button type="button"
+                class="px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-gray-100 dark:hover:bg-neutral-700 rounded-lg transition-colors"
+                data-hs-overlay="#hs-focus-management-modal">
+            Annuler
+        </button>
+        <button type="submit"
+                class="px-3 py-1.5 text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors">
+            Enregistrer
+        </button>
+    </div>
+</form>
 
 <script>
-    const promotionSelect = document.getElementById('promotion');
+function updateSemesters() {
+    const promotion = document.getElementById('promotion').value;
     const semestreSelect = document.getElementById('semestre');
+    semestreSelect.innerHTML = '<option value="" selected disabled>Sélectionnez un semestre</option>'; // Reset options
 
-    const optionsByPromotion = {
-        'L1': ['S1', 'S2'],
-        'L2': ['S3', 'S4'],
-        'L3': ['S5', 'S6'],
-        'M1': ['S1', 'S2'],
-        'M2': ['S3', 'S4']
-    };
+    let semesters = [];
+    switch (promotion) {
+        case 'L1':
+            semesters = ['S1', 'S2'];
+            break;
+        case 'L2':
+            semesters = ['S3', 'S4'];
+            break;
+        case 'L3':
+            semesters = ['S5', 'S6'];
+            break;
+        case 'M1':
+            semesters = ['S7', 'S8'];
+            break;
+        case 'M2':
+            semesters = ['S9', 'S10'];
+            break;
+    }
 
-    promotionSelect.addEventListener('change', function() {
-        const selectedPromotion = this.value;
-        semestreSelect.innerHTML = '<option value="">Sélectionnez Semestre</option>'; // Réinitialise les options du semestre
-
-        if (selectedPromotion && optionsByPromotion[selectedPromotion]) {
-            optionsByPromotion[selectedPromotion].forEach(function(semestre) {
-                const option = document.createElement('option');
-                option.value = semestre;
-                option.textContent = semestre;
-                semestreSelect.appendChild(option);
-            });
-        }
+    semesters.forEach(sem => {
+        const option = document.createElement('option');
+        option.value = sem;
+        option.textContent = sem;
+        semestreSelect.appendChild(option);
     });
+}
 </script>
-
-  <div class="p-4 overflow-y-auto">
-    <label for="input-label" class="block text-sm font-medium mb-2 dark:text-white">Année académique</label>
-    <select name="an_academique" id="input-label" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:placeholder-neutral-500 dark:text-neutral-400">
-        @for ($year = now()->year; $year <= now()->year + 10; $year++)
-            <option value="{{ $year }}-{{ $year + 1 }}">{{ $year }}-{{ $year + 1 }}</option>
-        @endfor
-    </select>
-</div>
-
-
-  {{-- <div class="p-4 overflow-y-auto">
-    <label for="input-label" class="block text-sm font-medium mb-2 dark:text-white">année académique</label>
-    <input type="date" name="an_academique" id="input-label" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:placeholder-neutral-500 dark:text-neutral-400" placeholder="année académique" autofocus="">
-  </div> --}}
-
-<div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
-  <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#hs-focus-management-modal">
-    Close
-  </button>
-  <button  type="submit" id='admin_store' type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-    Save changes
-  </button>
-
-</div>
-</form>
 @endsection

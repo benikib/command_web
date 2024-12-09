@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\pv;
 use Illuminate\Http\Request;
+use PDF;
 
 class PvController extends Controller
 {
@@ -12,7 +13,7 @@ class PvController extends Controller
      */
     public function index()
     {
-        
+
     }
 
     /**
@@ -62,5 +63,24 @@ class PvController extends Controller
     public function destroy(pv $pv)
     {
         //
+    }
+
+    public function download($id)
+    {
+        $pv = Pv::findOrFail($id);
+
+        // Charger la vue du PV avec les données
+        $pdf = PDF::loadView('pdf.pv', [
+            'pv' => $pv,
+            'surveillances' => $pv->surveillances,
+            'session' => $pv->session,
+            // Ajoutez d'autres données nécessaires
+        ]);
+
+        // Générer le nom du fichier
+        $filename = 'PV_Session_' . $pv->session->intitule . '_' . now()->format('Y-m-d') . '.pdf';
+
+        // Retourner le PDF en téléchargement
+        return $pdf->download($filename);
     }
 }

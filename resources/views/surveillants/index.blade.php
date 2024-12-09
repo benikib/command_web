@@ -1,182 +1,109 @@
 @extends("layouts.default")
 @section("content")
-<div class="p-4 sm:p-6 space-y-4 sm:space-y-6">
-    {{-- moadal --}}
-
-    @include('surveillants.create')
-    {{-- @include('admin.store.archiver') --}}
-
-    {{-- modal --}}
-
-        <!-- Card -->
-        <div class="flex flex-col">
-            <div class="-m-1.5 overflow-x-auto">
-              <div class="p-1.5 min-w-full inline-block align-middle">
-                <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-neutral-800 dark:border-neutral-700">
-                  <!-- Header -->
-                  <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
-                    <div>
-                      <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-200">
-                       {{ $examen->intitule }}                      </h2>
-                      <p class="text-sm text-gray-600 dark:text-neutral-400">
-                        Add users, edit and more.
-                      </p>
-                    </div>
-
-                    <div>
-                      <div class="inline-flex gap-x-2">
-                        <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" href="{{ route("pvx",['id'=>$examen->id]) }}">
-                          PV
-                        </a>
-
-                        <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-focus-management-modal" data-hs-overlay="#hs-focus-management-modal">
-                            Ajouter
-                           </button>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- End Header -->
-
-                  <!-- Table -->
-                  <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
-                    <thead class="bg-gray-50 dark:bg-neutral-800">
-                      <tr>
-                        <th scope="col" class="ps-6 py-3 text-start">
-
-                        </th>
-
-                        <th scope="col" class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3 text-start">
-                          <div class="flex items-center gap-x-2">
-                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
-                             Nom compltet
-                            </span>
-                          </div>
-                        </th>
-
-                        <th scope="col" class="px-6 py-3 text-start">
-                          <div class="flex items-center gap-x-2">
-                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
-                              Grade
-                            </span>
-                          </div>
-                        </th>
-
-                        <th scope="col" class="px-6 py-3 text-start">
-                          <div class="flex items-center gap-x-2">
-                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
-                              Filiere
-                            </span>
-                          </div>
-                        </th>
-
-                        <th scope="col" class="px-6 py-3 text-start">
-                          <div class="flex items-center gap-x-2">
-                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
-                              Date
-                            </span>
-                          </div>
-                        </th>
-
-                        <th scope="col" class="px-6 py-3 text-start">
-                          <div class="flex items-center gap-x-2">
-                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
-                              action
-                            </span>
-                          </div>
-                        </th>
-
-                        <th scope="col" class="px-6 py-3 text-end"></th>
-                      </tr>
-                    </thead>
-                    @forelse($surveillants as  $surveillant)
-                    <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
-
-                        <tr>
-                          <td class="size-px whitespace-nowrap">
-                            <div class="ps-6 py-3">
-
-                            </div>
-                          </td>
-                          <td class="size-px whitespace-nowrap">
-                            <div class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3">
-                              <div class="flex items-center gap-x-3">
-                                <span class="inline-flex items-center justify-center size-[38px] rounded-full bg-white border border-gray-300 dark:bg-neutral-800 dark:border-neutral-700">
-                                  <span class="font-medium text-sm text-gray-800 leading-none dark:text-neutral-200">{{ substr($surveillant->name,0,1) }}</span>
-                                </span>
-                                <div class="grow">
-                                  <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">{{ $surveillant->name }}</span>
-                                  <span class="block text-sm text-gray-500 dark:text-neutral-500">{{ $surveillant->email }}</span>
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="h-px w-72 whitespace-nowrap">
-                            <div class="px-6 py-3">
-                              <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">{{ $surveillant->grade }}</span>
-
-                            </div>
-                          </td>
-                          <td class="size-px whitespace-nowrap">
-                            <div class="px-6 py-3">
-                                <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">{{ $surveillant->filiere }}</span>
-
-                              </div>
-                          </td>
-
-                          <td class="size-px whitespace-nowrap">
-                            <div class="px-6 py-3">
-                              <span class="text-sm text-gray-500 dark:text-neutral-500">{{ $surveillant->created_at }}</span>
-                            </div>
-                          </td>
-                          <td class="size-px whitespace-nowrap">
-                            <div class="px-6 py-1.5">
-                              <a  href="{{route('surveillant.delete', ['id'=> $surveillant->surveillant_id])}}" class="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-blue-500" >
-                                Supprimer
-                              </a>
-                            </div>
-                          </td>
-                        </tr>
-
-                      </tbody>
-                    @empty
-
-                    @endforelse
-
-
-                  </table>
-                  <!-- End Table -->
-
-                  <!-- Footer -->
-                  <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-neutral-700">
-                    <div>
-                      <p class="text-sm text-gray-600 dark:text-neutral-400">
-                        <span class="font-semibold text-gray-800 dark:text-neutral-200">12</span> results
-                      </p>
-                    </div>
-
-                    <div>
-                      <div class="inline-flex gap-x-2">
-                        <button type="button" class="py-1.5 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
-                          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m15 18-6-6 6-6" />
-                          </svg>
-                          Prev
-                        </button>
-
-                        <button type="button" class="py-1.5 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
-                          Next
-                          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 18 6-6-6-6" />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- End Footer -->
-                </div>
-              </div>
+<div class="p-4 sm:p-6 space-y-6">
+    <!-- Bouton Retour -->
+    <div>
+        <a href="{{ url()->previous() }}"
+           class="inline-flex items-center px-4 py-2 bg-white hover:bg-gray-50 text-neutral-900 border border-neutral-200 rounded-lg transition-all duration-200 shadow-sm group">
+            <svg class="w-5 h-5 mr-2 text-neutral-500 group-hover:text-neutral-700 transition-colors"
+                 fill="none"
+                 stroke="currentColor"
+                 viewBox="0 0 24 24">
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            <span class="font-medium">Retour</span>
+        </a>
+    </div>
+    <!-- En-tête avec informations de l'examen -->
+    <div class="bg-white rounded-xl p-6">
+        <h1 class="text-2xl font-bold text-neutral-900 mb-4">Gestion des Surveillants</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h3 class="text-sm font-medium text-neutral-500 mb-1">Examen</h3>
+                <p class="text-neutral-900 font-medium">{{ $examen->intitule }}</p>
             </div>
-          </div>
-          <!-- End Card -->
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h3 class="text-sm font-medium text-neutral-500 mb-1">Professeur</h3>
+                <p class="text-neutral-900 font-medium">{{ $examen->professeur }}</p>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h3 class="text-sm font-medium text-neutral-500 mb-1">Date & Heure</h3>
+                <p class="text-neutral-900 font-medium">{{ $examen->date }} - {{ $examen->heure }}</p>
+            </div>
+        </div>
+    </div>
 
+    <!-- Section des surveillants -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Liste des surveillants assignés -->
+        <div class="bg-white rounded-xl overflow-hidden">
+            <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                <h2 class="text-lg font-semibold text-neutral-900">Surveillants Assignés</h2>
+            </div>
+            <div class="p-6">
+                @if($surveillants->count() > 0)
+                <div class="space-y-4">
+                    @foreach($surveillants as $surveillant)
+                    <div class="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-blue-500/10 p-2 rounded-lg">
+                                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-neutral-900 font-medium">{{ $surveillant->name }}</p>
+                                <p class="text-sm text-neutral-500">{{ $surveillant->email }}</p>
+                            </div>
+                        </div>
+                        <a href="{{ route('surveillant.delete', ['id' => $surveillant->surveillant_id]) }}"
+                           class="p-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                        </a>
+                    </div>
+                    @endforeach
+                </div>
+                @else
+                <p class="text-center text-neutral-500">Aucun surveillant assigné</p>
+                @endif
+            </div>
+        </div>
+
+        <!-- Formulaire d'ajout de surveillant -->
+        <div class="bg-white rounded-xl overflow-hidden">
+            <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                <h2 class="text-lg font-semibold text-neutral-900">Ajouter un Surveillant</h2>
+            </div>
+            <div class="p-6">
+                <form action="{{ route('surveillant_store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="examen_id" value="{{ $examen->id }}">
+                    <div class="space-y-4">
+                        <div>
+                            <label for="user_id" class="block text-sm font-medium text-neutral-700 mb-1">
+                                Sélectionner un surveillant
+                            </label>
+                            <select name="user_id" id="user_id"
+                                    class="w-full rounded-lg border-gray-200 focus:border-blue-500 focus:ring-blue-500">
+                                <option value="">Choisir un surveillant</option>
+                                @foreach($users_dispo as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <button type="submit"
+                                class="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">
+                            Ajouter le surveillant
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
