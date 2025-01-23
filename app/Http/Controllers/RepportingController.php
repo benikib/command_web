@@ -29,13 +29,14 @@ class RepportingController extends Controller
         // Récupérer tous les PVs où l'utilisateur est un agent
         $pvs = Pv::with(['examen.sessionExamen'])
             ->get()
-            ->filter(function($pv) use ($id) {
+            ->filter(function ($pv) use ($id) {
                 // Vérifier si l'ID existe dans le tableau d'agents
-                return collect($pv->agents)->pluck('id')->contains($id);
+                return collect(json_decode($pv->agents, true))->pluck('id')->contains($id);
             });
+        
 
         // Extraire les sessions uniques à partir des PVs
-        $sessions = $pvs->map(function($pv) {
+        $sessions = $pvs->map(function ($pv) {
             return $pv->examen->sessionExamen;
         })->unique('id')->values();
 
@@ -44,7 +45,7 @@ class RepportingController extends Controller
         //     'total_pvs_filtered' => $pvs->count(),
         //     'sessions' => $sessions->toArray()
         // ]);
-
+        // dd($user);
         return view("users.programme", compact("pvs", "sessions", "user"));
     }
 
@@ -193,10 +194,13 @@ class RepportingController extends Controller
             ->get();
 
         $users_dispo = DB::table('users')
-            ->leftJoin('surveillants', 'users.id', '=', 'surveillants.user_id')
-            ->where('surveillants.examen_id', '!=', $id)
-            ->orWhereNull('surveillants.user_id')
+            ->leftJoin('surveillants', function ($join) use ($id) {
+                $join->on('users.id', '=', 'surveillants.user_id')
+                    ->where('surveillants.examen_id', '=', $id);
+            })
+            ->whereNull('surveillants.id')
             ->select('users.*')
+            ->distinct()
             ->get();
 
 
@@ -337,14 +341,14 @@ class RepportingController extends Controller
             }
 
             return redirect()->route('examens.index', ['session_id' => $newSession->id])
-                            ->with('success', 'Les examens ont été recréés avec de nouvelles dates.');
+                ->with('success', 'Les examens ont été recréés avec de nouvelles dates.');
         }
 
         // Créer une nouvelle session si elle n'existe pas
         $session = SessionExamen::create($validatedData);
 
         return redirect()->route('examens.index', ['session_id' => $session->id])
-                        ->with('success', 'Session créée avec succès.');
+            ->with('success', 'Session créée avec succès.');
     }
 
     private function getNextWeekdayDate($date)

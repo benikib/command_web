@@ -57,7 +57,6 @@ class SurveillantController extends Controller
 
 
 
-        $i = 1;
         return view("soumispv.index", compact("i", 'totalsurveillance', 'examens_restants', 'totalsurveillances', 'examens'));
 
     }
@@ -96,7 +95,35 @@ class SurveillantController extends Controller
 
             ->select('users.*')
             ->get();
+
+        $pvs = Pv::with(['examen.sessionExamen'])
+            ->get()
+            ->filter(function ($pv) use ($id, $ex) {
+                // Vérifier si l'ID existe dans le tableau d'agents
+                return collect(json_decode($pv->agents, true))->pluck('id')->contains($id) && $pv->examen_id == $ex;
+            });
+
+        dd($pvs);
+        if (!$pvs->isEmpty()) {
+            $agents = json_decode($pvs->agents);
+
+            $pdf = PDF::loadView('soumispv.pv-pdf', [
+                'pv' => $pvs,
+                'agents' => $agents
+            ]);
+
+            $filename = 'pv_surveillance_' . $pvs->id . '.pdf';
+            return $pdf->download($filename);
+
+        }
+
+        // Sinon, afficher les résultats
+
+
+
         $user = User::findOrFail(Auth::user()->id);
+
+
 
 
 
@@ -153,12 +180,13 @@ class SurveillantController extends Controller
                 'examen_id' => $request->examen_id,
             ]);
 
-            return redirect()->back()->with('success', 'creation avec success');
+
+            return SurveillantController::index(Auth::user()->id);
         } catch (\Throwable $th) {
             dd($th);
             return redirect()->back()->with('erreur', 'error');
         }
-        dd($request);
+        return redirect()->back()->with('erreur', 'error');
     }
 
     /**
@@ -202,13 +230,13 @@ class SurveillantController extends Controller
         $session = SessionExamen::findOrFail($session_id);
 
         // Récupérer et filtrer les PVs
-        $pvs = Pv::whereHas('examen', function($query) use ($session_id) {
-                $query->where('session_examens_id', $session_id);
-            })
+        $pvs = Pv::whereHas('examen', function ($query) use ($session_id) {
+            $query->where('session_examens_id', $session_id);
+        })
             ->with('examen') // Eager loading de la relation examen
             ->get()
-            ->filter(function($pv) use ($user_id) {
-                return collect($pv->agents)->where('id', $user_id)->isNotEmpty();
+            ->filter(function ($pv) use ($user_id) {
+                return collect(json_decode($pv->agents, true))->where('id', $user_id)->isNotEmpty();
             });
 
         // Générer le PDF
@@ -251,13 +279,13 @@ class SurveillantController extends Controller
         // Récupérer tous les PVs de l'utilisateur
         $pvs = Pv::with(['examen.sessionExamen'])
             ->get()
-            ->filter(function($pv) use ($user_id) {
+            ->filter(function ($pv) use ($user_id) {
                 return collect($pv->agents)->where('id', $user_id)->isNotEmpty();
             });
 
         // Récupérer toutes les sessions
-        $sessions = SessionExamen::whereHas('examens', function($query) use ($user_id) {
-            $query->whereHas('pvs', function($q) use ($user_id) {
+        $sessions = SessionExamen::whereHas('examens', function ($query) use ($user_id) {
+            $query->whereHas('pvs', function ($q) use ($user_id) {
                 $q->whereRaw("JSON_CONTAINS(agents, JSON_OBJECT('id', ?))", [$user_id]);
             });
         })->get();

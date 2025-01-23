@@ -12,6 +12,7 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
+    
     Route::middleware('admin')->group(function () {
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -50,7 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/examens/{id}/download-pdf', [ExamenController::class, 'downloadPDF'])->name('examens.download.pdf');
     Route::get('/session/{id}/horaire-pdf', [ExamenController::class, 'downloadAllExamens'])->name('session.horaire.pdf');
     Route::get('/session/{session_id}/surveillance/{user_id}/pdf', [App\Http\Controllers\SurveillantController::class, 'downloadSurveillancesPDF'])
-        ->name('session.surveillance.pdf');
+        ->name('session.surveillance.pdf');E
     Route::get('/pv/{id}/download', [SurveillantController::class, 'downloadPV'])->name('pv.download');
     Route::get('/pv/download/{id}', [App\Http\Controllers\PvController::class, 'download'])->name('pv.download');
     Route::get('/surveillance/all/{user_id}/pdf', [App\Http\Controllers\SurveillantController::class, 'downloadAllSurveillancesPDF'])

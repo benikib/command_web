@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    function index(){
+    function index()
+    {
         // Statistiques de base
         $admins = count(Admin::all());
         $users = count(User::all());
@@ -23,12 +24,12 @@ class HomeController extends Controller
             now()->startOfWeek(),
             now()->endOfWeek()
         ])
-        ->orderBy('date', 'asc')
-        ->orderBy('heure', 'asc')
-        ->get();
+            ->orderBy('date', 'asc')
+            ->orderBy('heure', 'asc')
+            ->get();
 
         // Sessions en cours (avec des examens à venir)
-        $sessions_en_cours = SessionExamen::whereHas('examens', function($query) {
+        $sessions_en_cours = SessionExamen::whereHas('examens', function ($query) {
             $query->where('date', '>=', now());
         })->count();
 
@@ -49,6 +50,7 @@ class HomeController extends Controller
             ->orderBy('pvs.created_at', 'desc')
             ->limit(5)
             ->get();
+       
 
         return view('dashboard', compact(
             'admins',

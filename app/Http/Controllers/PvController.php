@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\pv;
+use DB;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -20,7 +21,6 @@ class PvController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-
     {
         //
     }
@@ -67,20 +67,21 @@ class PvController extends Controller
 
     public function download($id)
     {
-        $pv = Pv::findOrFail($id);
+        $pv = DB::table('pvs')
+            ->join('examens', 'pvs.examen_id', '=', 'examens.id')
+            ->join('session_examens', 'examens.session_examens_id', '=', 'session_examens.id')
+            ->where('pvs.id', '=', $id)
+            ->select('pvs.*', 'examens.*', 'session_examens.intitule as session_name')
+            ->first();
 
-        // Charger la vue du PV avec les données
-        $pdf = PDF::loadView('pdf.pv', [
+        $agents = json_decode(json_decode($pv->agents));
+
+        $pdf = PDF::loadView('soumispv.pv-pdf', [
             'pv' => $pv,
-            'surveillances' => $pv->surveillances,
-            'session' => $pv->session,
-            // Ajoutez d'autres données nécessaires
+            'agents' => $agents
         ]);
 
-        // Générer le nom du fichier
-        $filename = 'PV_Session_' . $pv->session->intitule . '_' . now()->format('Y-m-d') . '.pdf';
-
-        // Retourner le PDF en téléchargement
+        $filename = 'pv_surveillance_' . $pv->id . '.pdf';
         return $pdf->download($filename);
     }
 }
